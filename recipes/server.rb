@@ -29,6 +29,12 @@ remote_file File.join(Chef::Config[:file_cache_path], node['couchbase']['server'
   action :create_if_missing
 end
 
+if node['platform'] == 'ubuntu'
+  package "libssl0.9.8" do
+    action :install
+  end
+end
+
 dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file'])
 
 service "couchbase-server" do
